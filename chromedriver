@@ -15,12 +15,22 @@ print(driver.current_url)
 
 
 
+
 time.sleep(4)
 
 
 
 
+# second method if automatic chrome drive not working, then go to chrome 3 dots -- click on help -- see version
+# go to chromedriver.downloads and see the latest and stable version download and unzip the file
+# copy the exe file and save it in one c://users path and provide the same path below 
+# Chrome or Firefox or Edge - we can use which ever we need if above scenario not works use second method
 
+service_obj=Service("place that path here")
+driver=webdriver.Chrome(Service=service__obj)
+driver=webdriver.chrome()
+driver.maximize.window()
+time.sleep(3)
 
 
 
