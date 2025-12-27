@@ -1,0 +1,32 @@
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import *
+from selenium.webdriver.support.select import Select
+
+# chrome driver service selenium
+
+driver = webdriver.Chrome()
+driver.get("https://rahulshettyacademy.com/dropdownsPractise/")
+driver.maximize_window()
+
+# Dynamic dropdown using dropdown for many values like countries dropdown
+
+driver.find_element(By.ID, "autosuggest").send_keys("Ind")
+time.sleep(2)
+Countries = driver.find_elements(By.CSS_SELECTOR, "li[class='ui-menu-item'] a")
+len(Countries)
+print(len(Countries))
+
+for Country in Countries:
+    if Country.text == "India" :
+        Country.click()
+        break
+
+# print(driver.find_element(By.ID, "autosuggest").text)   ## this works if its in default text
+
+print(driver.find_element(By.ID, "autosuggest").get_attribute("value"))
+assert driver.find_element(By.ID, "autosuggest").get_attribute("value") == "India"
+
+# assert driver.find_element(By.ID, "autosuggest").get_attribute("value") == "Indiasss" # it fails becaus there is no value like Indiasss
