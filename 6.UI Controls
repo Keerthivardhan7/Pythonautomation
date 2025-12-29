@@ -1,1 +1,63 @@
 
+import time
+from tkinter import Radiobutton
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import *
+from selenium.webdriver.support.select import Select
+
+# chrome driver service selenium
+
+driver = webdriver.Chrome()
+# driver.get("https://rahulshettyacademy.com/dropdownsPractise/")
+driver.get("https://rahulshettyacademy.com/AutomationPractice/")
+driver.maximize_window()
+
+# if there are dynamic checkboxes and keep on changing the checkbox patterns use below for clicking correct one
+
+checkboxes=driver.find_elements(By.XPATH, "//input[@type='checkbox']")
+
+print(len(checkboxes))
+
+for checkbox in checkboxes:
+    if(checkbox.get_attribute("value")) == "option2":
+        checkbox.click()
+        assert checkbox.is_selected()
+        break
+
+
+
+
+# do the practice session for radio button 2 with is selected() method
+Radiobutton= driver.find_elements(By.XPATH, "//input[@type='radio']")
+
+print(len(Radiobutton))
+
+# for radio in Radiobutton:
+#     if(radio.get_attribute("value") )== "radio2":
+#         radio.click()
+#         assert radio.is_selected()
+#     break
+
+radioButtons = driver.find_elements(By.CSS_SELECTOR, ".radioButton")
+radioButtons[2].click()
+assert radioButtons[2].is_selected()
+
+time.sleep(2)
+
+
+
+# is displayed()method to showcase default hide/show example displayed or not
+
+assert driver.find_element(By.CSS_SELECTOR,"#displayed-text").is_displayed()
+
+driver.find_element(By.CSS_SELECTOR, '#hide-textbox').click()
+
+#  ( here it doesn't display because after click hide , it disappears so it prints output)
+assert not driver.find_element(By.CSS_SELECTOR, '#displayed-text').is_displayed()
+
+
+
+
+
