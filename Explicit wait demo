@@ -1,0 +1,55 @@
+import time
+import selenium.webdriver.support.expected_conditions as expected_conditions
+from itertools import count
+from tkinter import Radiobutton
+
+import driver
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import *
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+
+# implict Wait -- global time out -- if element found in 2 seconds it proceeds further than waiting for 5 seconds rather than normal time.sleep(5)
+
+
+# chrome driver service selenium
+
+driver = webdriver.Chrome()
+
+# driver.get("https://rahulshettyacademy.com/dropdownsPractise/")
+driver.get("https://rahulshettyacademy.com/seleniumPractise/#/")
+driver.maximize_window()
+
+driver.implicitly_wait(10)
+
+driver.find_element(By.CSS_SELECTOR, '.search-keyword').send_keys("ber")
+time.sleep(3)
+
+results = driver.find_elements(By.XPATH, "//div[@class='products']/div")
+Count = len(results)
+assert Count > 0
+
+# developing e2e tc to automate ecommerce greenkart application
+
+for result in results:
+    # chaining web element like parent is stored in result so to link to child - we use result.findelements( chaining
+    # method )
+    result.find_element(By.XPATH, 'div/button').click()
+
+driver.find_element(By.CSS_SELECTOR, "img[alt='Cart']").click()
+driver.find_element(By.XPATH, "//button[text()='PROCEED TO CHECKOUT']").click()
+
+
+# next scenario to see checkout details
+
+driver.find_element(By.XPATH, "//input[@placeholder='Enter promo code']").send_keys("rahulshettyacademy's")
+driver.find_element(By.CSS_SELECTOR, '.promoBtn').click()
+# here it takes time depends implict wait or explict wait
+# time.sleep(10)
+# explict wait it takes 10 seconds that applies only for one specific element
+
+wait = WebDriverWait(driver,10)
+wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR,'.promoInfo')))
+print(driver.find_element(By.CSS_SELECTOR, ".promoInfo").text)
+
